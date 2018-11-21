@@ -1,0 +1,41 @@
+DataViz with Vega-lite - Lundi 14-16h
+Afin de valider votre familiarisation avec Vega-lite, vous devrez réaliser une visualisation de données basée sur le modèle du second tutoriel ("Exploring the data" - https://vega.github.io/vega-lite/tutorials/explore.html). Il s'agit à partir d'un nouveau jeu de données proche (les mesures de la station météo de Troyes Barberey) de réaliser un graphique montrant les différents type de temps en fonction des mois (dernière visualisation réalisée avec le tutoriel).
+
+(In order to show your understanding of Vega-lite, you have to create a data visualization based on the examples presented in the Vega-lite second tutorial: "Exploring the data" - https://vega.github.io/vega-lite/tutorials/explore.html. You will use a similar dataset that contains the weather data of a local weather station based on Troyes Barberey and produce a stacked bar chart showing the proportion of different weather categories by month - that is the last example provided in the tutorial.)
+
+
+Data/Données (consultable sur "https://www.orkidees.com/share/07168.csv") : 
+
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+  "data": {"url": "https://www.orkidees.com/share/07168.csv"},
+  
+  // ... complete with your code
+  
+}
+
+Vous pouvez réaliser cet exercice avec le Vega-lite notebook.
+(You can do this exercize with the Vega-lite notebook)
+
+https://vega.github.io/editor/
+
+Les données sont au format CSV et comprennent les champs suivant pour chaque journée d'observation :
+(The data is a CSV file using the following fields for each daily record:)
+
+* jour : le jour concerné / the record day
+* t_min : température minimale de la journée / the day min temperature in celcius degree
+* t_max : température maximum de la journée / the day max temperature in celcius degree
+* vent : vitesse moyenne du vent enregistré sur la journée / the wind average speed for the day
+* meteo : temps extrapolé de la pression atmosphérique / weather category estimated from atmospheric pressure
+* precipitation : précipitations cumulées de la journée / the day precipitation
+
+"mq" est employé lorsque des observations sont manquantes.
+("mq" is employed when a measure is missing)
+
+Vous êtes vivement encouragé à proposer des améliorations à cette visualisation afin de démarquer votre contribution.
+(You are encouraged to propose improvements to the data visualization in order to make your contribution unique.)
+
+Déposer le code source de votre visualisation (fichier .txt ou .js) ainsi qu'une image du résultat en .png suir l'espace moodle dédié.
+(Upload your visualization code (.js or .txt file) as well as a picture of the result in .png on the dedicated moodle space.)
+
+Date limite de dépôt / Deadline : 28/11/18
