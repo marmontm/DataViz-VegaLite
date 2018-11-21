@@ -38,7 +38,7 @@ dataviz
     }
 
     let precipitationChart = {
-      data: { url: args.input },
+      data: { url: args.input, format: { type: 'csv' } },
       mark: 'tick',
       encoding: {
         x: { field: 'precipitation', type: 'quantitative' }
