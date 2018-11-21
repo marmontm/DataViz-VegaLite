@@ -25,12 +25,11 @@ dataviz
   //   // options = {"tail" : 100}
   // });
 
-  .command('precipitation', 'Looking at the precipation')
+  .command('export', 'Making chart about weather data, then export it to a PNG file')
   .argument('<input>', 'CSV file containing data to load')
   .argument('[output]', 'Output image file containing the chart')
   .action((args, options, logger) => {
     let outputFileName;
-
     if (args.output) {
       outputFileName = args.output;
     } else {
