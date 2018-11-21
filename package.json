@@ -1,0 +1,29 @@
+{
+  "name": "gl02-dataviz",
+  "version": "1.0.0",
+  "description": "Exploring data with vega-lite",
+  "main": "index.js",
+  "dependencies": {
+    "caporal": "^1.1.0",
+    "colors": "^1.3.2",
+    "vega": "^4.3.0",
+    "vega-lite": "^3.0.0-rc8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marmontm/DataViz-VegaLite.git"
+  },
+  "keywords": [
+    "vegalite"
+  ],
+  "author": "Maxime MARMONT <maxime.marmont@utt.fr>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marmontm/DataViz-VegaLite/issues"
+  },
+  "homepage": "https://github.com/marmontm/DataViz-VegaLite#readme"
+}
