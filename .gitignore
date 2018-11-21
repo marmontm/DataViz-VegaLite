@@ -1,6 +1,10 @@
 # IDE
 .idea/
 
+# Output files
+*.png
+*.svg
+
 # Logs
 logs
 *.log

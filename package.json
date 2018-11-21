@@ -2,7 +2,7 @@
   "name": "gl02-dataviz",
   "version": "1.0.0",
   "description": "Exploring data with vega-lite",
-  "main": "index.js",
+  "main": "dataviz.js",
   "dependencies": {
     "caporal": "^1.1.0",
     "colors": "^1.3.2",
