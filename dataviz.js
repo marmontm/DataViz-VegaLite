@@ -25,7 +25,10 @@ dataviz
   //   // options = {"tail" : 100}
   // });
 
-  .command('export', 'Making chart about weather data, then export it to a PNG file')
+  .command(
+    'export',
+    'Making chart about weather data, then export it to a PNG file'
+  )
   .argument('<input>', 'CSV file containing data to load')
   .argument('[output]', 'Output image file containing the chart')
   .action((args, options, logger) => {
@@ -33,20 +36,103 @@ dataviz
     if (args.output) {
       outputFileName = args.output;
     } else {
-      outputFileName = 'precipitation.png';
+      outputFileName = 'weatherreport.png';
     }
 
-    let precipitationChart = {
+    let weatherChart = {
+      $schema: 'https://vega.github.io/schema/vega-lite/v3.json',
       data: { url: args.input, format: { type: 'csv' } },
-      mark: 'tick',
-      encoding: {
-        x: { field: 'precipitation', type: 'quantitative' }
-      }
+      // Insert Vega JSON here //
+      layer: [
+        // Layer 1 : Stacked Bar Chart for Weather Type
+        {
+          mark: 'bar',
+          encoding: {
+            x: {
+              timeUnit: 'month',
+              field: 'jour',
+              type: 'ordinal',
+              axis: { title: 'Month of the year' }
+            },
+            y: {
+              aggregate: 'count',
+              type: 'quantitative',
+              axis: {
+                title: 'Number of records',
+                orient: 'left'
+              }
+            },
+            color: {
+              field: 'meteo',
+              type: 'nominal',
+              scale: {
+                domain: ['sun', 'fog', 'drizzle', 'rain', 'snow'],
+                range: ['#e7ba52', '#c7c7c7', '#aec7e8', '#748db4', '#ba8bbd']
+              },
+              legend: { title: 'Weather type' }
+            }
+          }
+        },
+        {
+          layer: [
+            // Layer 2 : Plot Minimal and Maximal Temperatures over the months
+            {
+              mark: 'line',
+              encoding: {
+                x: {
+                  timeUnit: 'month',
+                  field: 'jour',
+                  type: 'ordinal'
+                },
+                y: {
+                  aggregate: 'mean',
+                  field: 't_min',
+                  type: 'quantitative',
+                  axis: {
+                    grid: false,
+                    orient: 'right',
+                    title: 'Mean temperature in °C'
+                  },
+                  scale: { zero: false }
+                },
+                color: {
+                  value: '#0072ff'
+                }
+              }
+            },
+            {
+              mark: 'line',
+              encoding: {
+                x: {
+                  timeUnit: 'month',
+                  field: 'jour',
+                  type: 'ordinal'
+                },
+                y: {
+                  aggregate: 'mean',
+                  field: 't_max',
+                  type: 'quantitative',
+                  axis: {
+                    grid: false,
+                    orient: 'right',
+                    title: 'Mean temperature in °C'
+                  },
+                  scale: { zero: false }
+                },
+                color: {
+                  value: '#ff414b'
+                }
+              }
+            }
+          ]
+        }
+      ],
+      resolve: { scale: { y: 'independent' }}
     };
 
-    const myChart = vegalite.compile(precipitationChart).spec;
+    const outputChart = vegalite.compile(weatherChart).spec;
 
-    let runtime = vg.parse(myChart);
+    let runtime = vg.parse(outputChart);
     let view = new vg.View(runtime)
       .renderer('canvas')
       .background('#FFF')
@@ -55,7 +141,7 @@ dataviz
     myCanvas.then(function(res) {
       fs.writeFileSync(outputFileName, res.toBuffer());
       view.finalize();
-      logger.info(myChart);
+      logger.info(outputChart);
       logger.info('Chart output : ./' + outputFileName);
     });
   });
