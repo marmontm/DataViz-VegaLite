@@ -1,3 +1,17 @@
+/*
+* Analyze data from the weather station of Troyes
+* Node version 4.6.1
+*
+* @category Lab
+* @package  gl02-dataviz
+* @version  1.0.0
+* @author   Maxime MARMONT <maxime.marmont@utt.fr>
+* @License  MIT License
+* @link     https://github.com/marmontm/DataViz-VegaLite
+* */
+
+
+
 const dataviz = require('caporal');
 const fs = require('fs');
 const colors = require('colors');
@@ -6,24 +20,6 @@ const vegalite = require('vega-lite');
 
 dataviz
   .version('1.0.0')
-  // // you specify arguments using .argument()
-  // // 'app' is required, 'env' is optional
-  // .command('deploy', 'Deploy an application')
-  // .argument('<app>', 'App to deploy', /^myapp|their-app$/)
-  // .argument(
-  //   '[env]',
-  //   'Environment to deploy on',
-  //   /^dev|staging|production$/,
-  //   'local'
-  // )
-  // // you specify options using .option()
-  // // if --tail is passed, its value is required
-  // .option('--tail <lines>', 'Tail <lines> lines of logs after deploy', prog.INT)
-  // .action(function(args, options, logger) {
-  //   // args and options are objects
-  //   // args = {"app": "myapp", "env": "production"}
-  //   // options = {"tail" : 100}
-  // });
 
   .command(
     'export',
@@ -42,9 +38,18 @@ dataviz
     let weatherChart = {
       $schema: 'https://vega.github.io/schema/vega-lite/v3.json',
       data: { url: args.input, format: { type: 'csv' } },
-      // Insert Vega JSON here //
+      /*
+      *
+      * Chart composed in layers :
+      *
+      * 1 :     Stacked Bar for weather type over the months
+      * 2.1 :   Line for Mean Min Temperature (blue) over the months
+      * 2.2 :   Line for Mean Max Temperature (red) over the months
+      *
+      * */
+      // Primary layers start here
       layer: [
-        // Layer 1 : Stacked Bar Chart for Weather Type
+        // Layer 1 : Stacked Bar for weather type over the months
         {
           mark: 'bar',
           encoding: {
@@ -74,8 +79,9 @@ dataviz
           }
         },
         {
+          // Secondary layers start here
           layer: [
-            // Layer 2 : Plot Minimal and Maximal Temperatures over the months
+            // Layer 2.1 : Line for Mean Min Temperature (blue) over the months
             {
               mark: 'line',
               encoding: {
@@ -91,15 +97,16 @@ dataviz
                   axis: {
                     grid: false,
                     orient: 'right',
-                    title: 'Mean temperature in °C'
+                    title: 'Mean max / min temp. in °C'
                   },
                   scale: { zero: false }
                 },
                 color: {
-                  value: '#0072ff'
+                  value: '#00368d'
                 }
               }
             },
+            // Layer 2.2 : Line for Mean Max Temperature (red) over the months
             {
               mark: 'line',
               encoding: {
@@ -115,19 +122,20 @@ dataviz
                   axis: {
                     grid: false,
                     orient: 'right',
-                    title: 'Mean temperature in °C'
+                    title: 'Mean max / min temp. in °C'
                   },
                   scale: { zero: false }
                 },
                 color: {
-                  value: '#ff414b'
+                  value: '#f73b47'
                 }
               }
             }
           ]
+          // End of secondary layers
         }
       ],
-      resolve: { scale: { y: 'independent' }}
+      resolve: { scale: { y: 'independent' } }
     };
 
     const outputChart = vegalite.compile(weatherChart).spec;
